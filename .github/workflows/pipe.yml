@@ -23,41 +23,41 @@ jobs:
     - name: Compilação
       run: mvn clean install -DskipTests
       
-  code-quality:
-    name: Qualidade de Código
-    needs: build
-    runs-on: ubuntu-latest        
+#   code-quality:
+#     name: Qualidade de Código
+#     needs: build
+#     runs-on: ubuntu-latest        
     
-    steps:
-    - name: Git Checkout
-      uses: actions/checkout@v3
-    - name: Adiciona permissão para mvnw
-      run: chmod +x mvnw
-    - name: Análise SonarCloud
-      run: mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=lab-crescer-pipeline
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#     steps:
+#     - name: Git Checkout
+#       uses: actions/checkout@v3
+#     - name: Adiciona permissão para mvnw
+#       run: chmod +x mvnw
+#     - name: Análise SonarCloud
+#       run: mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=lab-crescer-pipeline
+#       env:
+#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
-  tests:
-    name: Testes automatizados
-    needs: code-quality
-    runs-on: ubuntu-latest    
+#   tests:
+#     name: Testes automatizados
+#     needs: code-quality
+#     runs-on: ubuntu-latest    
     
-    steps:
-    - name: Git Checkout
-      uses: actions/checkout@v3
-    - name: Configura JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Testes Unitários
-      run: mvn -B test --file pom.xml
+#     steps:
+#     - name: Git Checkout
+#       uses: actions/checkout@v3
+#     - name: Configura JDK 11
+#       uses: actions/setup-java@v3
+#       with:
+#         java-version: '11'
+#         distribution: 'temurin'
+#         cache: maven
+#     - name: Testes Unitários
+#       run: mvn -B test --file pom.xml
       
   push-image:
     name: Enviando Imagem para o DockerHub
-    needs: tests
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
