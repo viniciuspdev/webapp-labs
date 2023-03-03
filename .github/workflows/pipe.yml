@@ -80,7 +80,7 @@ jobs:
           franchialan/javacrescer:latest
   
   deploy:
-    name: Publica Demo     
+    name: Publica Web App     
     needs: push-image
     runs-on: ubuntu-latest
     steps:
