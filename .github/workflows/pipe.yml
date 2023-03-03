@@ -70,7 +70,7 @@ jobs:
     - name: Criação e envio da Imagem
       uses: docker/build-push-action@v4
       with:
-        context: .
+#         context: .
         file: ./Dockerfile
         push: true
         run: |
